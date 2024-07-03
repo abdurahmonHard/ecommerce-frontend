@@ -17,6 +17,12 @@ import {
 import axios from "axios";
 import { ORDER_LIST_MY_RESET } from "../Constants/OrderContants";
 
+
+
+const axiosInstance = axios.create({
+  baseURL: 'https://server-f1u8.onrender.com'
+});
+
 // LOGIN
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -28,13 +34,12 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      `/api/users/login`,
+    const { data } = await axiosInstance.post(
+      '/users/login',
       { email, password },
       config
     );
-    dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
-
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
@@ -69,13 +74,13 @@ export const register = (name, email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      `/api/users`,
+    const { data } = await axiosInstance.post(
+      '/users',
       { name, email, password },
       config
     );
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-    dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
@@ -103,7 +108,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await axiosInstance.get(`/users/${id}`, config);
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -136,8 +141,8 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(
-      `/api/users/profile`, user, config);
+    const { data } = await axiosInstance.put(
+      '/users/profile', user, config);
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
@@ -145,7 +150,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   } catch (error) {
     const message =
       error.response && error.response.data.message
-        ? error.response.data.message
+        ? error.response.data.message 
         : error.message;
     if (message === "Not authorized, token failed") {
       dispatch(logout());
@@ -155,4 +160,56 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       payload: message,
     });
   }
-}
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
