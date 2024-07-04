@@ -14,14 +14,12 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
 } from "../Constants/UserContants";
-import axios from "axios";
+import axiosInstance from './axiosconfig';
 import { ORDER_LIST_MY_RESET } from "../Constants/OrderContants";
 
 
 
-const axiosInstance = axios.create({
-  baseURL: 'https://server-f1u8.onrender.com'
-});
+
 
 // LOGIN
 export const login = (email, password) => async (dispatch) => {
