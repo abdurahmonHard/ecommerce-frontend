@@ -25,7 +25,7 @@ const Register = (location, history) => {
   }, [userInfo, history, redirect]);
 
   const submitHandler = (e) => {
-    e.prevenDefault();
+    e.preventDefault();
     dispatch(register(name, email, password));
   };
 
@@ -37,20 +37,20 @@ const Register = (location, history) => {
         {loading && <Loading />}
 
         <form className="Login col-md-8 col-lg-4 col-11" onSubmit={submitHandler}>
-          <imput
+          <input
             type="text"
             placeholder="Username"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <imput
+          <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <imput
+          <input
             type="password"
             placeholder="Password"
             value={password}
