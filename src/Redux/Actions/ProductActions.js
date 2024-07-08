@@ -1,6 +1,7 @@
 import { PRODUCT_CREATE_REVIEW_FAIL, PRODUCT_CREATE_REVIEW_REQUEST, PRODUCT_CREATE_REVIEW_SUCCESS, PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS } from "../Constants/ProductConstants";
 import { logout } from "./userActions";
-import axiosInstance from './axiosconfig';
+import axios from "axios";
+import { baseURL } from "./Urlconfig";
 
 // PRODUCT LIST
 export const listProduct =
@@ -8,8 +9,8 @@ export const listProduct =
     async (dispatch) => {
       try {
         dispatch({ type: PRODUCT_LIST_REQUEST });
-        const { data } = await axiosInstance.get(
-          `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+        const { data } = await axios.get(
+          `${baseURL}/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
         );
         dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
       } catch (error) {
@@ -28,7 +29,7 @@ export const listProduct =
 export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
-    const { data } = await axiosInstance.get(`/api/products/${id}`);
+    const { data } = await axios.get(`${baseURL}/api/products/${id}`);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -58,7 +59,7 @@ export const createProductReview = (productId, review) => async (dispatch, getSt
       },
     };
       
-    await axiosInstance.post(`/api/products/${productId}/review`, review, config);
+    await axios.post(`${baseURL}/api/products/${productId}/review`, review, config);
     dispatch({ type: PRODUCT_CREATE_REVIEW_SUCCESS});
   } catch (error) {
     const message =

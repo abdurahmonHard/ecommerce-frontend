@@ -1,4 +1,4 @@
-import axiosInstance from './axiosconfig';
+
 import 
 { 
   CART_ADD_ITEM, 
@@ -6,10 +6,12 @@ import
   CART_SAVE_PAYMENT_METHOD, 
   CART_SAVE_SHIPPING_ADDRESS
 } from "../Constants/CartContants";
+import axios from 'axios';
+import { baseURL } from "./Urlconfig";
 
 // ADD TO CART
 export const addToCart = (id, qty) => async (dispatch, getState) => {
-  const { data } = await axiosInstance.get(`/api/products/${id}`);
+  const { data } = await axios.get(`${baseURL}/api/products/${id}`);
 
   dispatch({
     type: CART_ADD_ITEM,
